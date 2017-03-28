@@ -1,9 +1,7 @@
 module.exports.routes = {
 
 
-  '/': {
-    view: 'homepage'
-  },
+  '/': 'AdminController.login',
 
   'post /api/user/login': 'APIController.login',
   'post /api/user/register': 'APIController.register',
