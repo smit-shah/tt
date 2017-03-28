@@ -1,2 +1,3 @@
 # tt
-TT
+
+a [Sails](http://sailsjs.org) application

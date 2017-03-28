@@ -1,0 +1,13 @@
+<script>
+    var socket;
+    window.onload = function(){
+        socket = io.sails.connect('http://localhost:1337/');
+        socket.post('/api/home', { user_id: 6 }, function(data){
+            console.log(data)
+        });
+
+        socket.on('msg', function(data){
+            console.log(data);
+        })
+    }
+</script>
