@@ -1,4 +1,53 @@
-<script>
+<!DOCTYPE html>
+<html>
+
+<head>
+
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>Tick Tock | Login</title>
+
+    <link href="/theme/css/bootstrap.min.css" rel="stylesheet">
+    <link href="/theme/font-awesome/css/font-awesome.css" rel="stylesheet">
+
+    <link href="/theme/css/animate.css" rel="stylesheet">
+    <link href="/theme/css/style.css" rel="stylesheet">
+
+</head>
+
+<body class="gray-bg">
+
+    <div class="middle-box text-center loginscreen animated fadeInDown">
+        <div>
+            <div>
+                <h1 class="logo-name">TT</h1>
+            </div>
+            <h3>Welcome to Tick Tock</h3>
+            <form class="m-t" role="form" action="" method="post">
+                <div class="form-group">
+                    <input type="email" class="form-control" name="email" placeholder="Username" required="">
+                </div>
+                <div class="form-group">
+                    <input type="password" class="form-control" name="password" placeholder="Password" required="">
+                </div>
+                <button type="submit" class="btn btn-primary block full-width m-b">Login</button>
+
+                <a href="#"><small>Forgot password?</small></a>
+            </form>
+            <p class="m-t"> <small>Tick Tock &copy; 2017</small> </p>
+        </div>
+    </div>
+
+    <!-- Mainly scripts -->
+    <script src="/theme/js/jquery-2.1.1.js"></script>
+    <script src="/theme/js/bootstrap.min.js"></script>
+
+</body>
+
+</html>
+
+<!-- <script>
     var socket;
     window.onload = function(){
         socket = io.sails.connect('http://localhost:1337/');
@@ -11,3 +60,4 @@
         })
     }
 </script>
+-->

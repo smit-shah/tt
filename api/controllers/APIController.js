@@ -72,18 +72,24 @@ module.exports = {
 		if (!user_id)
 			return res.json({ status: 'Fail', message: 'User is can not be blank!', data: {} })
 
-		Jackpot.find().populate('playing', { where: { id: user_id }, limit: 1 }).exec(function(err, userGame){
+		Jackpot.find().populate('playing', { where: { id: user_id }, limit: 1 }).populate('bids', { sort: 'id DESC', limit: 1 }).exec(function(err, userGame){
 			if (userGame && userGame[0].playing.length == 0) {
 				Jackpot.find().where({ can_join: 1 }).limit(1).sort('id ASC').exec(function(e, game){
+					var channel_name = 'game_' + game[0]['id'];
 					User.update({ id: user_id }, { jackpot: game[0]['id'] }).exec(function(){
-						sails.sockets.join(req, 'test', function(){
+						sails.sockets.join(req, channel_name, function(){
 							return res.json({ status: 'Sucess', message: 'Game found!', data: game[0] });
 						});
 					});
 				});
 			}
-			else {
-				sails.sockets.join(req, 'test', function(){
+			else { // We have found one game in user account
+				Jackpot.findOne(userGame[0].id).exec(function(err, jack){
+					console.log(jack);
+				});
+				var channel_name = 'game_' + userGame[0].id;
+				console.log(userGame);
+				sails.sockets.join(req, channel_name, function(){
 					//This will give you list of socket of test channel
 					/*sails.io.sockets.in('test').clients(function(data, u){
 						console.log(u);
@@ -95,6 +101,10 @@ module.exports = {
 				});
 			}
 		});
+	},
+
+	add_game_bid: function(req, res) {
+
 	},
 
 	test: function(req, res) {
