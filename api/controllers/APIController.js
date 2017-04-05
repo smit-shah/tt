@@ -14,12 +14,12 @@ module.exports = {
 			password = req.param('password');
 
 		if (!email)
-			return res.json({ status: 'Fail', message: 'Email can not be blank!', data: {} });
+			return res.json({ status: 'Fail', message: 'Email or Username can not be blank!', data: {} });
 
 		if (!password)
 			return res.json({ status: 'Fail', message: 'Password can not be blank!', data: {} });
 
-		User.findOne({ email: email, password: md5(password) }).exec(function(err, user){
+		User.findOne().where({ or: [ { email: email} , { username: email } ] }).where({password: md5(password) }).exec(function(err, user){
 			if (!user) {
 				return res.json({ status: 'Fail', message: 'Not able to do login', data: {} });
 			}
@@ -33,7 +33,12 @@ module.exports = {
 		var user_data = {
 			name: req.param('name'),
 			email: req.param('email'),
-			password: req.param('password')
+			password: req.param('password'),
+			username: req.param('username'),
+			dob: req.param('dob'),
+			gender: req.param('gender'),
+			device_id: req.param('device_id'),
+			country: req.param('country')
 		};
 
 		User.create(user_data).exec(function(err, user){
@@ -41,12 +46,17 @@ module.exports = {
 
 				if (err.Errors.email)
 					return res.json({status: 'Fail', message: err.Errors.email[0].message, data: {} });
+
+				if (err.Errors.username)
+					return res.json({status: 'Fail', message: err.Errors.username[0].message, data: {} });
 				
 				if (err.Errors.name)
 					return res.json({ status: 'Fail', message: err.Errors.name[0].message, data: {} });
 
 				if (err.Errors.password)
 					return res.json({ status: 'Fail', message: err.Errors.password[0].message, data: {} });
+
+				console.log(err.Errors);
 			}
 			else {
 				req.file('image').upload({dirname: require('path').resolve(sails.config.appPath, 'assets/images')}, function (err, uploadedImage){

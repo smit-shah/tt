@@ -11,13 +11,18 @@ module.exports = {
 	attributes: {
 		email: 			{ type: 'email', required: true, unique: true },
 		name: 			{ type: 'string', required: true },
+		username: 		{ type: 'string', required: true, unique: true },
 		password: 		{ type: 'string', required: true },
+		dob: 			{ type: 'string', defaultsTo: '' },
+		gender: 		{ type: 'string', defaultsTo: '' },
+		country: 		{ type: 'string', defaultsTo: '' },
 		image: 			{ type: 'string', defaultsTo: '' },
 		fbid: 			{ type: 'string' },
 		game_bids: 		{ type: 'integer', defaultsTo: 0 },
 		jackpot: 		{ model: 'Jackpot', defaultsTo: 0 },
 		forgot_token: 	{ type: 'string', defaultsTo: '' },
 		notification: 	{ type: 'integer', defaultsTo: 1 },
+		device_id: 		{ type: 'string', defaultsTo: '' },
 
 		toJSON: function() {
 			var obj = this.toObject();
@@ -83,6 +88,10 @@ module.exports = {
         name: {
             required: 'Fullname is required',
             string: 'Fullname is required'
+        },
+        username: {
+            required: 'User name is required',
+            string: 'User name is required'
         },
         password: {
         	required: 'Password is required',
